@@ -86,7 +86,6 @@ on post-fs-data
 
 on boot
     start vendor.rmt_storage
-    start rfs_access
 
     # Thermal
     chmod 0664 /sys/class/thermal/thermal_message/sconfig
