@@ -6,6 +6,7 @@ persist.vendor.cne.feature=1
 
 # Display
 debug.sf.disable_client_composition_cache=1
+vendor.display.disable_rotator_downscale=1
 
 # DIRAC
 ro.audio.soundfx.dirac=true
