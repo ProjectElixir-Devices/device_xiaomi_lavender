@@ -8,7 +8,7 @@ DEVICE_PATH := device/xiaomi/lavender
 
 RELAX_USES_LIBRARY_CHECK := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-
+BUILD_BROKEN_DUP_RULES := true
 BOARD_VENDOR := xiaomi
 
 # Assert
