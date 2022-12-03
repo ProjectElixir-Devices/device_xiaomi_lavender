@@ -132,7 +132,7 @@
         <item>1000</item> <!-- overcast -->
         <item>3000</item> <!-- indirect sun -->
         <item>10000</item> <!-- daylight -->
-    </integer-array> -->
+    </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
          in the config_autoBrightnessLevels array.  This array should have size one greater
@@ -151,7 +151,7 @@
         <item>194</item>
         <item>254</item>
         <item>255</item>
-    </integer-array> -->
+    </integer-array>
 
     <!-- Screen brightness used to dim the screen when the user activity
          timeout expires.  May be less than the minimum allowed brightness setting
