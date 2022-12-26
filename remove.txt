@@ -1,0 +1,6 @@
+device/xiaomi 
+kernel/xiaomi 
+vendor/xiaomi 
+hardware/qcom-caf/msm8998/display 
+hardware/qcom-caf/msm8998/audio
+hardware/qcom-caf/msm8998/media
