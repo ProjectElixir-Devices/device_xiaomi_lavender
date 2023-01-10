@@ -44,14 +44,6 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String PREF_NOTIF_LED = "notification_led_brightness";
     public static final String NOTIF_LED_PATH = "/sys/class/leds/white/max_brightness";
 
-    public static final  String CATEGORY_AUDIO_AMPLIFY = "audio_amplify";
-    public static final  String PREF_EARPIECE_GAIN = "earpiece_gain";
-    public static final  String PREF_HEADPHONE_GAIN = "headphone_gain";
-    public static final  String PREF_MIC_GAIN = "mic_gain";
-    public static final  String EARPIECE_GAIN_PATH = "/sys/kernel/sound_control/earpiece_gain";
-    public static final  String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
-    public static final  String MIC_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
-
     private static final String PREF_ENABLE_DIRAC = "dirac_enabled";
     private static final String PREF_HEADSET = "dirac_headset_pref";
     private static final String PREF_PRESET = "dirac_preset_pref";
@@ -74,7 +66,7 @@ public class DeviceSettings extends PreferenceFragment implements
 
     private static final String DEVICE_JASON_PACKAGE_NAME = "org.lineageos.settings.devicex";
     private static final String PREF_DEVICE_JASON = "device_jason";
-    
+
     private static final String PREF_CLEAR_SPEAKER = "clear_speaker_settings";
     private Preference mClearSpeakerPref;
 
@@ -85,14 +77,13 @@ public class DeviceSettings extends PreferenceFragment implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_xiaomi_parts, rootKey);
-        
+
         mClearSpeakerPref = (Preference) findPreference(PREF_CLEAR_SPEAKER);
         mClearSpeakerPref.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(getActivity().getApplicationContext(), ClearSpeakerActivity.class);
             startActivity(intent);
             return true;
         });
-
 
         // LED Brightness
         if (FileUtils.fileWritable(NOTIF_LED_PATH)) {
@@ -107,32 +98,9 @@ public class DeviceSettings extends PreferenceFragment implements
             vibrationStrength.setOnPreferenceChangeListener(this);
         } else { getPreferenceScreen().removePreference(findPreference(CATEGORY_VIBRATOR)); }
 
-        // Amplify Audio 
-        PreferenceCategory gainCategory = (PreferenceCategory) findPreference(CATEGORY_AUDIO_AMPLIFY);
-        // Earpiece Gain
-        if (FileUtils.fileWritable(EARPIECE_GAIN_PATH)) {
-           CustomSeekBarPreference earpieceGain = (CustomSeekBarPreference) findPreference(PREF_EARPIECE_GAIN);
-           earpieceGain.setOnPreferenceChangeListener(this);
-        } else {
-          gainCategory.removePreference(findPreference(PREF_EARPIECE_GAIN));
-        }
-        // Headphone Gain
-        if (FileUtils.fileWritable(HEADPHONE_GAIN_PATH)) {
-           CustomSeekBarPreference headphoneGain = (CustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
-           headphoneGain.setOnPreferenceChangeListener(this);
-        } else {
-          gainCategory.removePreference(findPreference(PREF_HEADPHONE_GAIN));
-        }
-        // Mic Gain
-        if (FileUtils.fileWritable(MIC_GAIN_PATH)) {
-           CustomSeekBarPreference micGain = (CustomSeekBarPreference) findPreference(PREF_MIC_GAIN);
-           micGain.setOnPreferenceChangeListener(this);
-        } else {
-          gainCategory.removePreference(findPreference(PREF_MIC_GAIN));
-        }
-
         // Display Category
         PreferenceCategory displayCategory = (PreferenceCategory) findPreference(CATEGORY_DISPLAY);
+
         // Doze
         if (isAppNotInstalled(DEVICE_DOZE_PACKAGE_NAME)) {
             displayCategory.removePreference(findPreference(PREF_DEVICE_DOZE));
@@ -141,9 +109,11 @@ public class DeviceSettings extends PreferenceFragment implements
         if (isAppNotInstalled(DEVICE_JASON_PACKAGE_NAME)) {
             displayCategory.removePreference(findPreference(PREF_DEVICE_JASON));
         }
+
         //FPS Info
         SecureSettingSwitchPreference fpsInfo = (SecureSettingSwitchPreference) findPreference(PREF_KEY_FPS_INFO);
         fpsInfo.setOnPreferenceChangeListener(this);
+
         // KCAL
         Preference kcal = findPreference(PREF_DEVICE_KCAL);
         kcal.setOnPreferenceClickListener(preference -> {
@@ -193,18 +163,6 @@ public class DeviceSettings extends PreferenceFragment implements
                 FileUtils.setValue(VIBRATION_STRENGTH_PATH, vibrationValue);
                 break;
 
-            case PREF_EARPIECE_GAIN:
-                FileUtils.setValue(EARPIECE_GAIN_PATH, (int) value);
-                break;
-
-            case PREF_HEADPHONE_GAIN:
-                FileUtils.setValue(HEADPHONE_GAIN_PATH, value + " " + value);
-                break;
-
-            case PREF_MIC_GAIN:
-                FileUtils.setValue(MIC_GAIN_PATH, (int) value);
-                break;
-
             case PREF_ENABLE_DIRAC:
                 try {
                     DiracService.sDiracUtils.setEnabled((boolean) value);
@@ -241,7 +199,7 @@ public class DeviceSettings extends PreferenceFragment implements
                     this.getContext().stopService(fpsinfo);
                 }
                 break;
-                
+
             default:
                 break;
         }
